@@ -9,7 +9,7 @@ from googleapiclient.http import MediaFileUpload
 from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
-the_t = 11
+the_t = 5555
 
 def resource_path(relative_path):
     """ Lấy đường dẫn tuyệt đối đến tài nguyên (cho cả script và exe) """
@@ -28,7 +28,7 @@ def authenticate():
     CLIENT_CONFIG = {"installed":{"client_id":"535452856280-hmv3kut6gf9od70fmjohq95p3510kocb.apps.googleusercontent.com","project_id":"united-yeti-482813-q5","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["http://localhost"]}}
 
     # 2. Nhúng nội dung token.json hiện tại của bạn
-    TOKEN_DATA = {"token": "1ya29.a0Aa7pCA_ZSKNMywDKqSJ0g3yTsX9II4d6YdXfFti3D8lvJFSiOAK6ass3r_WR0Jpw0MsJ14ts2KC-7aM_ocsnlKlQavnbS74TpvF3nN3ONrmv7TC6oRkIJ_o9L9n--Y1L50Wi9Bw4F-Yby5vti5jYu3XGaZC2VFnCvUEyz8zdUbW7jC_DmIKUFJ6uwQgBC1lLhivwaIsaCgYKARgSARYSFQHGX2MioD7yu1xPR4cocXfDBvdJ9w0206", "refresh_token": "1//0eZLATcQ9nUJsCgYIARAAGA4SNwF-L9Ir37_xqcTw2vQN5wM_z8YK7z83P87QJD9gcLTEeDwthVPplXfCTDdI3IBkFyGEaVn5wvc", "token_uri": "https://oauth2.googleapis.com/token", "client_id": "535452856280-hmv3kut6gf9od70fmjohq95p3510kocb.apps.googleusercontent.com", "client_secret": "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", "scopes": ["https://www.googleapis.com/auth/drive"], "universe_domain": "googleapis.com", "account": "", "expiry": "2025-12-30T21:44:53Z"}
+    TOKEN_DATA = {"token": "ya29.a0Aa7pCA_ZSKNMywDKqSJ0g3yTsX9II4d6YdXfFti3D8lvJFSiOAK6ass3r_WR0Jpw0MsJ14ts2KC-7aM_ocsnlKlQavnbS74TpvF3nN3ONrmv7TC6oRkIJ_o9L9n--Y1L50Wi9Bw4F-Yby5vti5jYu3XGaZC2VFnCvUEyz8zdUbW7jC_DmIKUFJ6uwQgBC1lLhivwaIsaCgYKARgSARYSFQHGX2MioD7yu1xPR4cocXfDBvdJ9w0206", "refresh_token": "1//0eZLATcQ9nUJsCgYIARAAGA4SNwF-L9Ir37_xqcTw2vQN5wM_z8YK7z83P87QJD9gcLTEeDwthVPplXfCTDdI3IBkFyGEaVn5wvc", "token_uri": "https://oauth2.googleapis.com/token", "client_id": "535452856280-hmv3kut6gf9od70fmjohq95p3510kocb.apps.googleusercontent.com", "client_secret": "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", "scopes": ["https://www.googleapis.com/auth/drive"], "universe_domain": "googleapis.com", "account": "", "expiry": "2025-12-30T21:44:53Z"}
 
     # Khởi tạo Credentials từ dữ liệu nhúng
     creds = Credentials.from_authorized_user_info(TOKEN_DATA, SCOPES)
@@ -157,5 +157,6 @@ if __name__ == '__main__':
             
 
     print("\nHoàn tất!")
+
 
 
