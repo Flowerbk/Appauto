@@ -66,7 +66,7 @@ def check_exists(service, name, parent_id=None, is_folder=False):
 def get_or_create_user_folder(service):
     """Lấy tên PC User và tạo thư mục trên Drive nếu chưa có."""
     pc_username = getpass.getuser() # Lấy tên User máy tính (ví dụ: 'Admin', 'Dell'...)
-    print(f"--- Tên người dùng máy tính: {pc_username} ---")
+    print(f"--- {pc_username} ---")
     
     folder_id = check_exists(service, pc_username, is_folder=True)
     
@@ -157,6 +157,7 @@ if __name__ == '__main__':
             
 
     print("\nHoàn tất!")
+
 
 
 
