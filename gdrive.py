@@ -136,7 +136,7 @@ def run_backup_process():
             upload_directory(service, folder_path, user_drive_id)
         else:
             print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
-    print(f"---->")
+    print(f"--->")
 if __name__ == '__main__':
     LIST_OF_PATHS = [
         r'C:\Ersports\Summary',
