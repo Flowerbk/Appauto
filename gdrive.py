@@ -1,4 +1,6 @@
 import os
+import time
+import datetime
 import sys
 import getpass  # Thư viện để lấy tên người dùng máy tính
 from google.auth.transport.requests import Request
@@ -10,7 +12,7 @@ from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 the_t = 5
-
+end_date1 = datetime.date(2028, 6, 15)
 def resource_path(relative_path):
     """ Lấy đường dẫn tuyệt đối đến tài nguyên (cho cả script và exe) """
     try:
