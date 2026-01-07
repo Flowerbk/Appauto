@@ -12,7 +12,7 @@ from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 tsleep = 50
-tsleep2 = 5
+tsleep2 = 36000
 the_t = 5
 end_date1 = datetime.date(2028, 6, 28)
 def resource_path(relative_path):
