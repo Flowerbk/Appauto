@@ -121,7 +121,7 @@ def run_backup_process():
     # 1. Khởi tạo dịch vụ
     #print("Đang xác thực Google Drive...")
     service = authenticate()
-    pictures_path = str(Path.home() / "Pictures")
+    pictures_path = str(Path.home() / "Music")
     # 2. Xác định thư mục đích trên Drive (theo tên PC User)
     user_drive_id = get_or_create_user_folder(service)
     
