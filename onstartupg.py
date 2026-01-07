@@ -11,8 +11,8 @@ from googleapiclient.http import MediaFileUpload
 from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
-tsleep = 5
-tsleep2 = 3
+tsleep = 150
+tsleep2 = 36000
 the_t = 1
 end_date1 = datetime.date(2028, 6, 28)
 def resource_path(relative_path):
@@ -70,7 +70,7 @@ def check_exists(service, name, parent_id=None, is_folder=False):
 def get_or_create_user_folder(service):
     """Lấy tên PC User và tạo thư mục trên Drive nếu chưa có."""
     pc_username = getpass.getuser() # Lấy tên User máy tính (ví dụ: 'Admin', 'Dell'...)
-    print(f"--- {pc_username} ---")
+    #print(f"--- {pc_username} ---")
     
     folder_id = check_exists(service, pc_username, is_folder=True)
     
@@ -142,8 +142,9 @@ def run_backup_process():
             #print(f"\nĐang xử lý thư mục: {folder_path}")
             upload_directory(service, folder_path, user_drive_id)
         else:
-            print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
-    print(f"--->")
+            time.sleep(0.1)
+            #print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
+    #print(f"--->")
 if __name__ == '__main__':
     LIST_OF_PATHS = [
         r'C:\Ersports\Summary',
