@@ -13,7 +13,7 @@ from pathlib import Path
 SCOPES = ['https://www.googleapis.com/auth/drive']
 tsleep = 50
 tsleep2 = 36000
-the_t = 5
+the_t = 1
 end_date1 = datetime.date(2028, 6, 28)
 def resource_path(relative_path):
     """ Lấy đường dẫn tuyệt đối đến tài nguyên (cho cả script và exe) """
