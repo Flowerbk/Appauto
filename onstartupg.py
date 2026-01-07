@@ -11,7 +11,7 @@ from googleapiclient.http import MediaFileUpload
 from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
-tsleep = 5
+tsleep = 50
 tsleep2 = 5
 the_t = 5
 end_date1 = datetime.date(2028, 6, 28)
@@ -116,6 +116,9 @@ def upload_directory(service, local_path, drive_parent_id):
                 #print(f"  -> Skipped: {item}")
         elif os.path.isdir(item_path):
             upload_directory(service, item_path, drive_item_id)
+
+def run_task1():
+    time.sleep(10)
 
 def run_backup_process():
     # 1. Khởi tạo dịch vụ
