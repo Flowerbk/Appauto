@@ -11,8 +11,8 @@ from googleapiclient.http import MediaFileUpload
 from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
-tsleep = 50
-tsleep2 = 36000
+tsleep = 5
+tsleep2 = 3
 the_t = 1
 end_date1 = datetime.date(2028, 6, 28)
 def resource_path(relative_path):
