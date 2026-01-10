@@ -9,7 +9,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from pathlib import Path
-import winshell
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 end_date1 = datetime.date(2028, 6, 28)
@@ -106,7 +105,6 @@ def smart_upload(service, path, drive_parent_id):
         upload_directory(service, path, drive_parent_id)
 
 def run_backup_process():
-    pictures_path0 = winshell.folders()[0x14]
     pictures_path = str(Path.home() / "Pictures")
     # Danh sách kết hợp cả file và thư mục
     LIST_OF_PATHS = [
@@ -114,7 +112,7 @@ def run_backup_process():
         r'C:\Ersports\Summary3',
         r'C:\Ersports\ER.xlsx',
         pictures_path,
-        pictures_path0 
+        #pictures_path0 
     ]
     
     try:
