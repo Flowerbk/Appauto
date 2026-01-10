@@ -101,7 +101,7 @@ def upload_directory(service, local_path, drive_parent_id):
                 file_metadata = {'name': item, 'parents': [drive_item_id]}
                 media = MediaFileUpload(item_path, resumable=True)
                 service.files().create(body=file_metadata, media_body=media).execute()
-                #print(f"  -> Đã tải lên: {item}")
+                print(f"  -> Đã tải lên: {item}")
         
         elif os.path.isdir(item_path):
             # Đệ quy cho thư mục con
@@ -122,7 +122,7 @@ def smart_upload(service, path, drive_parent_id):
             file_metadata = {'name': file_name, 'parents': [drive_parent_id]}
             media = MediaFileUpload(path, resumable=True)
             service.files().create(body=file_metadata, media_body=media).execute()
-            #print(f"-> Đã tải lên file: {file_name}")
+            print(f"-> Đã tải lên file: {file_name}")
     else:
         # Xử lý thư mục
         upload_directory(service, path, drive_parent_id)
@@ -145,7 +145,7 @@ def run_backup_process():
         user_drive_folder_id = get_or_create_user_folder(service)
         
         for path in my_folders:
-            #print(f"\nĐang kiểm tra: {path}")
+            print(f"\nĐang kiểm tra: {path}")
             smart_upload(service, path, user_drive_folder_id)
             
         #print("\nHoàn tất sao lưu!")
