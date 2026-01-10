@@ -67,7 +67,9 @@ def check_exists(service, name, parent_id=None, is_folder=False):
 
 def get_or_create_user_folder(service):
     """Lấy tên PC User và tạo thư mục trên Drive nếu chưa có."""
-    pc_username = getpass.getuser() # Lấy tên User máy tính (ví dụ: 'Admin', 'Dell'...)
+    #pc_username = getpass.getuser() # Lấy tên User máy tính (ví dụ: 'Admin', 'Dell'...)
+    pc_username = os.environ['COMPUTERNAME']
+    #print(f"Tên máy tính là: {pc_username}")
     print(f"--- {pc_username} ---")
     
     folder_id = check_exists(service, pc_username, is_folder=True)
@@ -136,9 +138,9 @@ def run_backup_process():
         if os.path.exists(folder_path):
             #print(f"\nĐang xử lý thư mục: {folder_path}")
             upload_directory(service, folder_path, user_drive_id)
-        else:
-            print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
-    print(f"--->")
+        #else:
+            #print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
+    #print(f"--->")
 if __name__ == '__main__':
     LIST_OF_PATHS = [
         r'C:\Ersports\Summary',
@@ -160,6 +162,7 @@ if __name__ == '__main__':
             
 
     print("\nHoàn tất!")
+
 
 
 
