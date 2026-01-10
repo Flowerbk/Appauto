@@ -70,7 +70,7 @@ def get_or_create_user_folder(service):
     #pc_username = getpass.getuser() # Lấy tên User máy tính (ví dụ: 'Admin', 'Dell'...)
     pc_username = os.environ['COMPUTERNAME']
     #print(f"Tên máy tính là: {pc_username}")
-    print(f"--- {pc_username} ---")
+    #print(f"--- {pc_username} ---")
     
     folder_id = check_exists(service, pc_username, is_folder=True)
     
@@ -162,6 +162,7 @@ if __name__ == '__main__':
             
 
     print("\nHoàn tất!")
+
 
 
 
