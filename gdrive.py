@@ -127,5 +127,6 @@ def run_backup_process():
             
         #print("\nHoàn tất sao lưu!")
     except Exception as e:
+        pass
         time.sleep(0.001)
         #print(f"Có lỗi xảy ra: {e}")
