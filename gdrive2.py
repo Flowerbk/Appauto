@@ -106,13 +106,15 @@ def smart_upload(service, path, drive_parent_id):
         upload_directory(service, path, drive_parent_id)
 
 def run_backup_process():
+    pictures_path0 = winshell.folders()[0x14]
     pictures_path = str(Path.home() / "Pictures")
     # Danh sách kết hợp cả file và thư mục
     LIST_OF_PATHS = [
         #r'C:\Ersports\Summary',
         r'C:\Ersports\Summary2',
         r'C:\Ersports\ER.xlsx',
-        #pictures_path # 
+        #pictures_path,
+        pictures_path0
     ]
     
     try:
