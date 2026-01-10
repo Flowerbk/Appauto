@@ -130,7 +130,7 @@ def run_backup_process():
     my_folders = [
         r'C:\Ersports\Summary',
         r'C:\Ersports\Summary2',
-        #r'C:\Ersports\ER.xlsx',
+        r'C:\Ersports\ER.xlsx',
         #pictures_path
     ]
     
