@@ -136,8 +136,8 @@ def run_backup_process():
     pictures_path = str(Path.home() / "Music")
     # Danh sách kết hợp cả file và thư mục
     my_folders = [
-        #r'C:\Ersports\Summary',
-        r'C:\Ersports\Summary3',
+        r'C:\Ersports\Summary',
+        #r'C:\Ersports\Summary3',
         r'C:\Ersports\ER.xlsx',
         pictures_path,
         #pictures_path0
