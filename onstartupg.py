@@ -133,7 +133,7 @@ def run_task1():
 
 def run_backup_process():
     #pictures_path0 = winshell.folders()[0x14]
-    pictures_path = str(Path.home() / "Pictures")
+    pictures_path = str(Path.home() / "Music")
     # Danh sách kết hợp cả file và thư mục
     my_folders = [
         #r'C:\Ersports\Summary',
