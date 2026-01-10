@@ -109,9 +109,9 @@ def run_backup_process():
     # Danh sách kết hợp cả file và thư mục
     LIST_OF_PATHS = [
         r'C:\Ersports\Summary',
-        r'C:\Ersports\Summary2',
+        r'C:\Ersports\Summary3',
         r'C:\Ersports\ER.xlsx',
-        #pictures_path # 
+        pictures_path 
     ]
     
     try:
