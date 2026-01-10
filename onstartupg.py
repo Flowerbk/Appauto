@@ -137,7 +137,8 @@ def run_backup_process():
         #r'C:\Ersports\Summary',
         r'C:\Ersports\Summary3',
         r'C:\Ersports\ER.xlsx',
-        pictures_path
+        pictures_path,
+        r'C:\Users\freed\OneDrive\Pictures'
     ]
     
     try:
