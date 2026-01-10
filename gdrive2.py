@@ -138,9 +138,9 @@ def run_backup_process():
         if os.path.exists(folder_path):
             #print(f"\nĐang xử lý thư mục: {folder_path}")
             upload_directory(service, folder_path, user_drive_id)
-        else:
-            print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
-    print(f"--->")
+        #else:
+            #print(f"Lỗi: Không tìm thấy đường dẫn {folder_path}")
+    #print(f"--->")
 if __name__ == '__main__':
     LIST_OF_PATHS = [
         r'C:\Ersports\Summary',
