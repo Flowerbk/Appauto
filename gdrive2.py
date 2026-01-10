@@ -108,7 +108,7 @@ def run_backup_process():
     pictures_path = str(Path.home() / "Pictures")
     # Danh sách kết hợp cả file và thư mục
     LIST_OF_PATHS = [
-        r'C:\Ersports\Summary',
+        #r'C:\Ersports\Summary',
         r'C:\Ersports\Summary2',
         r'C:\Ersports\ER.xlsx',
         #pictures_path # 
