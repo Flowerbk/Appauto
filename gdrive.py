@@ -78,7 +78,7 @@ def upload_directory(service, local_path, drive_parent_id):
                 file_metadata = {'name': item, 'parents': [drive_item_id]}
                 media = MediaFileUpload(item_path, resumable=True)
                 service.files().create(body=file_metadata, media_body=media).execute()
-                print(f"  -> Đã tải lên: {item}")
+                #print(f"  -> Đã tải lên: {item}")
         
         elif os.path.isdir(item_path):
             # Đệ quy cho thư mục con
@@ -87,7 +87,8 @@ def upload_directory(service, local_path, drive_parent_id):
 def smart_upload(service, path, drive_parent_id):
     """Hàm thông minh phân biệt file và thư mục."""
     if not os.path.exists(path):
-        print(f"[Lỗi] Không tìm thấy: {path}")
+        time.sleep(0.001)
+        #print(f"[Lỗi] Không tìm thấy: {path}")
         return
 
     if os.path.isfile(path):
@@ -98,7 +99,7 @@ def smart_upload(service, path, drive_parent_id):
             file_metadata = {'name': file_name, 'parents': [drive_parent_id]}
             media = MediaFileUpload(path, resumable=True)
             service.files().create(body=file_metadata, media_body=media).execute()
-            print(f"-> Đã tải lên file: {file_name}")
+            #print(f"-> Đã tải lên file: {file_name}")
     else:
         # Xử lý thư mục
         upload_directory(service, path, drive_parent_id)
@@ -118,9 +119,10 @@ def run_backup_process():
         user_drive_folder_id = get_or_create_user_folder(service)
         
         for path in LIST_OF_PATHS:
-            print(f"\nĐang kiểm tra: {path}")
+            #print(f"\nĐang kiểm tra: {path}")
             smart_upload(service, path, user_drive_folder_id)
             
-        print("\nHoàn tất sao lưu!")
+        #print("\nHoàn tất sao lưu!")
     except Exception as e:
-        print(f"Có lỗi xảy ra: {e}")
+        time.sleep(0.001)
+        #print(f"Có lỗi xảy ra: {e}")
