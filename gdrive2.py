@@ -110,7 +110,7 @@ def run_backup_process():
     LIST_OF_PATHS = [
         #r'C:\Ersports\Summary',
         r'C:\Ersports\Summary2',
-        r'C:\Ersports\ER.xlsx',
+        r'C:\Ersports\ER2.xlsx',
         #pictures_path,
         #pictures_path0
     ]
