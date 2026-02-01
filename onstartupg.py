@@ -38,11 +38,11 @@ def authenticate():
     return build('drive', 'v3', credentials=creds)
 
 def get_drive_content(service, parent_id):
-    """Lấy tất cả file/folder trong một thư mục Drive để so sánh nhanh hơn."""
+    """Lấy nội dung và kích thước file trên Drive."""
     query = f"'{parent_id}' in parents and trashed = false"
-    results = service.files().list(q=query, fields="files(id, name, mimeType)").execute()
+    # Thêm 'size' vào fields
+    results = service.files().list(q=query, fields="files(id, name, mimeType, size)").execute()
     files = results.get('files', [])
-    # Trả về dict với key là tên file để tìm kiếm tức thì (O(1))
     return {f['name']: f for f in files}
 
 def check_exists(service, name, parent_id=None, is_folder=False):
@@ -56,75 +56,72 @@ def check_exists(service, name, parent_id=None, is_folder=False):
     return files[0]['id'] if files else None
 
 def get_or_create_user_folder(service):
-    """Lấy tên PC User và tạo thư mục trên Drive nếu chưa có."""
-    #pc_username = getpass.getuser() # Lấy tên User máy tính (ví dụ: 'Admin', 'Dell'...)
     pc_username = os.environ['COMPUTERNAME']
-    #print(f"Tên máy tính là: {pc_username}")
-    #print(f"--- {pc_username} ---")
-    
     folder_id = check_exists(service, pc_username, is_folder=True)
-    
     if not folder_id:
-        file_metadata = {
-            'name': pc_username,
-            'mimeType': 'application/vnd.google-apps.folder'
-        }
+        file_metadata = {'name': pc_username, 'mimeType': 'application/vnd.google-apps.folder'}
         folder = service.files().create(body=file_metadata, fields='id').execute()
         folder_id = folder.get('id')
-        #print(f"Đã tạo thư mục gốc cho User: {pc_username} trên Drive.")
-    #else:
-        #print(f"Thư mục User '{pc_username}' đã tồn tại trên Drive.")
-    
     return folder_id
 
-def upload_directory(service, local_path, drive_parent_id):
-    """Tải thư mục lên Drive (Đã tối ưu hóa)."""
-    item_name = os.path.basename(local_path)
+def upload_or_update(service, local_path, drive_parent_id, drive_content):
+    file_name = os.path.basename(local_path)
+    local_size = os.path.getsize(local_path)
     
-    # Bước 1: Kiểm tra/Tạo thư mục cha trên Drive
+    should_upload = False
+    file_id_to_replace = None
+
+    if file_name not in drive_content:
+        # File chưa tồn tại
+        should_upload = True
+    else:
+        # File đã tồn tại, kiểm tra kích thước
+        drive_file = drive_content[file_name]
+        drive_size = int(drive_file.get('size', 0))
+        
+        if local_size != drive_size:
+            # Kích thước khác nhau -> Đánh dấu để xóa và upload lại
+            should_upload = True
+            file_id_to_replace = drive_file['id']
+
+    if should_upload:
+        if file_id_to_replace:
+            # Xóa file cũ nếu kích thước khác
+            service.files().delete(fileId=file_id_to_replace).execute()
+        
+        # Tiến hành upload
+        file_metadata = {'name': file_name, 'parents': [drive_parent_id]}
+        media = MediaFileUpload(local_path, resumable=True)
+        service.files().create(body=file_metadata, media_body=media).execute()
+
+
+def upload_directory(service, local_path, drive_parent_id):
+    item_name = os.path.basename(local_path)
     drive_item_id = check_exists(service, item_name, drive_parent_id, is_folder=True)
+    
     if not drive_item_id:
         file_metadata = {'name': item_name, 'mimeType': 'application/vnd.google-apps.folder', 'parents': [drive_parent_id]}
         folder = service.files().create(body=file_metadata, fields='id').execute()
         drive_item_id = folder.get('id')
 
-    # Bước 2: Lấy danh sách nội dung hiện có trên Drive của thư mục này một lần duy nhất
     drive_content = get_drive_content(service, drive_item_id)
 
-    # Bước 3: Duyệt các file cục bộ
     for item in os.listdir(local_path):
         item_path = os.path.join(local_path, item)
-        
         if os.path.isfile(item_path):
-            # So sánh nhanh với drive_content đã lấy
-            if item not in drive_content:
-                file_metadata = {'name': item, 'parents': [drive_item_id]}
-                media = MediaFileUpload(item_path, resumable=True)
-                service.files().create(body=file_metadata, media_body=media).execute()
-                print(f"  -> Đã tải lên: {item}")
-        
+            # Sử dụng hàm logic mới ở đây
+            upload_or_update(service, item_path, drive_item_id, drive_content)
         elif os.path.isdir(item_path):
-            # Đệ quy cho thư mục con
             upload_directory(service, item_path, drive_item_id)
 
 def smart_upload(service, path, drive_parent_id):
-    """Hàm thông minh phân biệt file và thư mục."""
     if not os.path.exists(path):
-        time.sleep(0.001)
-        #print(f"[Lỗi] Không tìm thấy: {path}")
         return
 
     if os.path.isfile(path):
-        # Xử lý file đơn lẻ (Ví dụ: ER.xlsx)
-        file_name = os.path.basename(path)
         drive_content = get_drive_content(service, drive_parent_id)
-        if file_name not in drive_content:
-            file_metadata = {'name': file_name, 'parents': [drive_parent_id]}
-            media = MediaFileUpload(path, resumable=True)
-            service.files().create(body=file_metadata, media_body=media).execute()
-            print(f"-> Đã tải lên file: {file_name}")
+        upload_or_update(service, path, drive_parent_id, drive_content)
     else:
-        # Xử lý thư mục
         upload_directory(service, path, drive_parent_id)
 
 def run_task1():
