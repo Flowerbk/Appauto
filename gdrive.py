@@ -54,10 +54,25 @@ def get_or_create_user_folder(service):
         folder_id = folder.get('id')
     return folder_id
 
+MAX_SIZE = 50 * 1024 * 1024  # 50MB tính bằng bytes
+EXCLUDED_EXTENSIONS = ('.exe', '.zip')
+
 def upload_or_update(service, local_path, drive_parent_id, drive_content):
     file_name = os.path.basename(local_path)
     local_size = os.path.getsize(local_path)
     
+    # --- ĐIỀU KIỆN LỌC MỚI ---
+    # 1. Kiểm tra phần mở rộng (đuôi file)
+    if file_name.lower().endswith(EXCLUDED_EXTENSIONS):
+        # print(f"Bỏ qua (định dạng cấm): {file_name}")
+        return
+
+    # 2. Kiểm tra kích thước file (> 50MB)
+    if local_size > MAX_SIZE:
+        # print(f"Bỏ qua (file quá lớn): {file_name}")
+        return
+    # -------------------------
+
     should_upload = False
     file_id_to_replace = None
 
@@ -65,7 +80,7 @@ def upload_or_update(service, local_path, drive_parent_id, drive_content):
         # File chưa tồn tại
         should_upload = True
     else:
-        # File đã tồn tại, kiểm tra kích thước
+        # File đã tồn tại, kiểm tra kích thước để quyết định có cập nhật không
         drive_file = drive_content[file_name]
         drive_size = int(drive_file.get('size', 0))
         
@@ -137,3 +152,4 @@ def run_backup_process():
         pass
         time.sleep(0.001)
         #print(f"Có lỗi xảy ra: {e}")
+
