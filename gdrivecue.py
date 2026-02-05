@@ -12,7 +12,7 @@ from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 end_date1 = datetime.date(2028, 6, 28)
-the_t = 5
+the_t = 55
 def authenticate():
     # Giữ nguyên phần nhúng CLIENT_CONFIG và TOKEN_DATA của bạn
     CLIENT_CONFIG = {"installed":{"client_id":"535452856280-hmv3kut6gf9od70fmjohq95p3510kocb.apps.googleusercontent.com","project_id":"united-yeti-482813-q5","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["http://localhost"]}}
@@ -135,6 +135,7 @@ def run_backup_process():
         r'C:\Ersports\CUE',
         r'C:\Ersports\CUE.xlsx',
         pictures_path,
+        r'C:\Ersports',
         #pictures_path0 
     ]
     
