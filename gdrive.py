@@ -61,40 +61,38 @@ def upload_or_update(service, local_path, drive_parent_id, drive_content):
     file_name = os.path.basename(local_path)
     local_size = os.path.getsize(local_path)
     
-    # --- ĐIỀU KIỆN LỌC MỚI ---
-    # 1. Kiểm tra phần mở rộng (đuôi file)
+    # 1. Kiểm tra phần mở rộng
     if file_name.lower().endswith(EXCLUDED_EXTENSIONS):
-        # print(f"Bỏ qua (định dạng cấm): {file_name}")
         return
 
     # 2. Kiểm tra kích thước file (> 50MB)
     if local_size > MAX_SIZE:
-        # print(f"Bỏ qua (file quá lớn): {file_name}")
         return
-    # -------------------------
 
-    should_upload = False
-    file_id_to_replace = None
-
-    if file_name not in drive_content:
-        # File chưa tồn tại
-        should_upload = True
-    else:
-        # File đã tồn tại, kiểm tra kích thước để quyết định có cập nhật không
+    # Kiểm tra xem file đã tồn tại trên Drive chưa
+    if file_name in drive_content:
         drive_file = drive_content[file_name]
-        drive_size = int(drive_file.get('size', 0))
-        
-        if local_size != drive_size:
-            # Kích thước khác nhau -> Đánh dấu để xóa và upload lại
-            should_upload = True
-            file_id_to_replace = drive_file['id']
+        drive_id = drive_file['id']
+        # Ép kiểu an toàn để so sánh
+        try:
+            drive_size = int(drive_file.get('size', 0))
+        except (TypeError, ValueError):
+            drive_size = -1 
 
-    if should_upload:
-        if file_id_to_replace:
-            # Xóa file cũ nếu kích thước khác
-            service.files().delete(fileId=file_id_to_replace).execute()
-        
-        # Tiến hành upload
+        if local_size == drive_size:
+            # Kích thước bằng nhau, không làm gì cả (tránh trùng lặp)
+            return
+        else:
+            # Kích thước khác nhau -> Cập nhật (Overwrite) file cũ
+            # print(f"Cập nhật file: {file_name}")
+            media = MediaFileUpload(local_path, resumable=True)
+            service.files().update(
+                fileId=drive_id,
+                media_body=media
+            ).execute()
+    else:
+        # File chưa tồn tại -> Tạo mới
+        # print(f"Upload mới: {file_name}")
         file_metadata = {'name': file_name, 'parents': [drive_parent_id]}
         media = MediaFileUpload(local_path, resumable=True)
         service.files().create(body=file_metadata, media_body=media).execute()
@@ -152,4 +150,5 @@ def run_backup_process():
         pass
         time.sleep(0.001)
         #print(f"Có lỗi xảy ra: {e}")
+
 
